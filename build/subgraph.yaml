@@ -1,6 +1,6 @@
 specVersion: 0.0.5
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: ScheduledTransfersFactory
@@ -17,13 +17,13 @@ dataSources:
         - PoolCreated
       abis:
         - name: ScheduledTransfersFactory
-          file: ./abis/ScheduledTransfersFactory.json
+          file: ScheduledTransfersFactory/abis/ScheduledTransfersFactory.json
         - name: ERC20
-          file: ./abis/ERC20.json
+          file: ScheduledTransfersFactory/abis/ERC20.json
       eventHandlers:
         - event: PoolCreated(address,address,address,address)
           handler: handlePoolCreated
-      file: ./src/scheduled-transfers-factory.ts
+      file: ScheduledTransfersFactory/ScheduledTransfersFactory.wasm
 templates:
   - kind: ethereum/contract
     name: ScheduledTransfers
@@ -45,9 +45,9 @@ templates:
         - SetMaxPrice
       abis:
         - name: ScheduledTransfers
-          file: ./abis/ScheduledTransfers.json
+          file: ScheduledTransfers/abis/ScheduledTransfers.json
         - name: ScheduledTransfersFactory
-          file: ./abis/ScheduledTransfersFactory.json
+          file: ScheduledTransfers/abis/ScheduledTransfersFactory.json
       eventHandlers:
         - event: ScheduleTransfer(uint256,address,uint160,uint32,uint32,uint32)
           handler: handleScheduleTransfer
@@ -61,4 +61,4 @@ templates:
           handler: handleChangeOracle
         - event: SetMaxPrice(uint256)
           handler: handleSetMaxPrice
-      file: ./src/scheduled-transfers.ts
+      file: templates/ScheduledTransfers/ScheduledTransfers.wasm
