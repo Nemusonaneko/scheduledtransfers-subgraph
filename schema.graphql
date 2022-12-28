@@ -1,0 +1,10 @@
+type PoolCreated @entity(immutable: true) {
+  id: Bytes!
+  pool: Bytes! # address
+  owner: Bytes! # address
+  token: Bytes! # address
+  oracle: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

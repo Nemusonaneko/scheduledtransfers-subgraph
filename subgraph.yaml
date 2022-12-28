@@ -1,0 +1,23 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: ScheduledTransfersFactory
+    network: goerli
+    source:
+      address: "0xAC9CD74CBdb7580208a40B58739a784DE7f46fB4"
+      abi: ScheduledTransfersFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - PoolCreated
+      abis:
+        - name: ScheduledTransfersFactory
+          file: ./abis/ScheduledTransfersFactory.json
+      eventHandlers:
+        - event: PoolCreated(address,address,address,address)
+          handler: handlePoolCreated
+      file: ./src/scheduled-transfers-factory.ts
