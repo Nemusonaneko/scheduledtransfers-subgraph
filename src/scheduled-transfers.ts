@@ -23,6 +23,7 @@ export function handleScheduleTransfer(event: ScheduleTransferEvent): void {
   payment.pool = pool.id;
   payment.createdTimestamp = event.block.timestamp;
   payment.createdBlock = event.block.number;
+  payment.save();
 }
 
 export function handleCancelTransfer(event: CancelTransferEvent): void {
