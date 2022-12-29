@@ -32,6 +32,12 @@
         "internalType": "address",
         "name": "oracle",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxPrice",
+        "type": "uint256"
       }
     ],
     "name": "PoolCreated",
@@ -50,7 +56,8 @@
   {
     "inputs": [
       { "internalType": "address", "name": "_oracle", "type": "address" },
-      { "internalType": "address", "name": "_token", "type": "address" }
+      { "internalType": "address", "name": "_token", "type": "address" },
+      { "internalType": "uint256", "name": "_maxPrice", "type": "uint256" }
     ],
     "name": "createContract",
     "outputs": [
@@ -61,6 +68,13 @@
       }
     ],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxPrice",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
     "type": "function"
   },
   {

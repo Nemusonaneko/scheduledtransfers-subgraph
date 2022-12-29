@@ -28,6 +28,7 @@ export function handlePoolCreated(event: PoolCreatedEvent): void {
   pool.owner = event.params.owner;
   pool.oracle = event.params.oracle;
   pool.token = token.id;
+  pool.maxPrice = event.params.maxPrice;
   pool.createdTimestamp = event.block.timestamp;
   pool.createdBlock = event.block.number;
 

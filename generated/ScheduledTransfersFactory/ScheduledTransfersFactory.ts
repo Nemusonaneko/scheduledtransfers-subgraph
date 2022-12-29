@@ -38,6 +38,10 @@ export class PoolCreated__Params {
   get oracle(): Address {
     return this._event.parameters[3].value.toAddress();
   }
+
+  get maxPrice(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
 }
 
 export class ScheduledTransfersFactory extends ethereum.SmartContract {
@@ -45,11 +49,19 @@ export class ScheduledTransfersFactory extends ethereum.SmartContract {
     return new ScheduledTransfersFactory("ScheduledTransfersFactory", address);
   }
 
-  createContract(_oracle: Address, _token: Address): Address {
+  createContract(
+    _oracle: Address,
+    _token: Address,
+    _maxPrice: BigInt
+  ): Address {
     let result = super.call(
       "createContract",
-      "createContract(address,address):(address)",
-      [ethereum.Value.fromAddress(_oracle), ethereum.Value.fromAddress(_token)]
+      "createContract(address,address,uint256):(address)",
+      [
+        ethereum.Value.fromAddress(_oracle),
+        ethereum.Value.fromAddress(_token),
+        ethereum.Value.fromUnsignedBigInt(_maxPrice)
+      ]
     );
 
     return result[0].toAddress();
@@ -57,18 +69,38 @@ export class ScheduledTransfersFactory extends ethereum.SmartContract {
 
   try_createContract(
     _oracle: Address,
-    _token: Address
+    _token: Address,
+    _maxPrice: BigInt
   ): ethereum.CallResult<Address> {
     let result = super.tryCall(
       "createContract",
-      "createContract(address,address):(address)",
-      [ethereum.Value.fromAddress(_oracle), ethereum.Value.fromAddress(_token)]
+      "createContract(address,address,uint256):(address)",
+      [
+        ethereum.Value.fromAddress(_oracle),
+        ethereum.Value.fromAddress(_token),
+        ethereum.Value.fromUnsignedBigInt(_maxPrice)
+      ]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  maxPrice(): BigInt {
+    let result = super.call("maxPrice", "maxPrice():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_maxPrice(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("maxPrice", "maxPrice():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   oracle(): Address {
@@ -174,6 +206,10 @@ export class CreateContractCall__Inputs {
 
   get _token(): Address {
     return this._call.inputValues[1].value.toAddress();
+  }
+
+  get _maxPrice(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
   }
 }
 

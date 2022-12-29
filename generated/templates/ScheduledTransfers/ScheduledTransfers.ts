@@ -279,8 +279,12 @@ export class WithdrawPayer__Params {
     this._event = event;
   }
 
+  get token(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
   get amount(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
+    return this._event.parameters[1].value.toBigInt();
   }
 }
 
@@ -1205,8 +1209,12 @@ export class WithdrawPayerCall__Inputs {
     this._call = call;
   }
 
-  get amount(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
+  get _token(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get _amount(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
   }
 }
 
