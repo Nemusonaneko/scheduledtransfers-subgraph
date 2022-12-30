@@ -6,6 +6,7 @@ type Pool @entity {
   maxPrice: BigInt
   token: Token!
   payments: [Payment!]! @derivedFrom(field: "pool")
+  history: [HistoryEvent!]! @derivedFrom(field: "pool")
   createdTimestamp: BigInt
   createdBlock: BigInt
 }
@@ -21,7 +22,7 @@ type Token @entity {
 type Payment @entity {
   id: ID!
   streamId: BigInt
-  payee: Bytes
+  token: Token
   redirects: Bytes
   usdAmount: BigInt
   starts: BigInt
@@ -29,6 +30,22 @@ type Payment @entity {
   frequency: BigInt
   lastPaid: BigInt
   pool: Pool!
+  history: [HistoryEvent!]! @derivedFrom(field: "payment")
+  createdTimestamp: BigInt
+  createdBlock: BigInt
+}
+
+type HistoryEvent @entity {
+  id: ID!
+  txHash: Bytes
+  eventType: String
+  token: Token
+  amount: BigInt
+  usdAmount: BigInt
+  price: BigInt
+  to: Bytes
+  pool: Pool!
+  payment: Payment
   createdTimestamp: BigInt
   createdBlock: BigInt
 }

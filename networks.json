@@ -3,5 +3,10 @@
     "ScheduledTransfersFactory": {
       "address": "0x497C03b1CAC69c45eBB738732Ed56D5951b323c0"
     }
+  },
+  "optimism": {
+    "ScheduledTransfersFactory": {
+      "address": "0x497C03b1CAC69c45eBB738732Ed56D5951b323c0"
+    }
   }
 }

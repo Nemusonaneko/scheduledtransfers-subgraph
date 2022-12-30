@@ -1,5 +1,5 @@
 import { PoolCreated as PoolCreatedEvent } from "../generated/ScheduledTransfersFactory/ScheduledTransfersFactory";
-import { Pool, Token } from "../generated/schema";
+import { HistoryEvent, Pool, Token } from "../generated/schema";
 import { ERC20 } from "../generated/ScheduledTransfersFactory/ERC20";
 import { ScheduledTransfers } from "../generated/templates";
 
@@ -31,6 +31,18 @@ export function handlePoolCreated(event: PoolCreatedEvent): void {
   pool.maxPrice = event.params.maxPrice;
   pool.createdTimestamp = event.block.timestamp;
   pool.createdBlock = event.block.number;
+
+  let history = new HistoryEvent(
+    `${event.address.toHexString()}-${event.transaction.hash.toHexString()}-PoolCreated`
+  );
+  history.txHash = event.transaction.hash;
+  history.eventType = "PoolCreated";
+  history.token = token.id;
+  history.price = event.params.maxPrice;
+  history.pool = pool.id;
+  history.createdTimestamp = event.block.timestamp;
+  history.createdBlock = event.block.number;
+  history.save();
 
   token.save();
   pool.save();

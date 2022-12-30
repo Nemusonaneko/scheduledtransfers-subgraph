@@ -128,6 +128,15 @@ export class Pool extends Entity {
     this.set("payments", Value.fromStringArray(value));
   }
 
+  get history(): Array<string> {
+    let value = this.get("history");
+    return value!.toStringArray();
+  }
+
+  set history(value: Array<string>) {
+    this.set("history", Value.fromStringArray(value));
+  }
+
   get createdTimestamp(): BigInt | null {
     let value = this.get("createdTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
@@ -303,20 +312,20 @@ export class Payment extends Entity {
     }
   }
 
-  get payee(): Bytes | null {
-    let value = this.get("payee");
+  get token(): string | null {
+    let value = this.get("token");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set payee(value: Bytes | null) {
+  set token(value: string | null) {
     if (!value) {
-      this.unset("payee");
+      this.unset("token");
     } else {
-      this.set("payee", Value.fromBytes(<Bytes>value));
+      this.set("token", Value.fromString(<string>value));
     }
   }
 
@@ -429,6 +438,226 @@ export class Payment extends Entity {
 
   set pool(value: string) {
     this.set("pool", Value.fromString(value));
+  }
+
+  get history(): Array<string> {
+    let value = this.get("history");
+    return value!.toStringArray();
+  }
+
+  set history(value: Array<string>) {
+    this.set("history", Value.fromStringArray(value));
+  }
+
+  get createdTimestamp(): BigInt | null {
+    let value = this.get("createdTimestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set createdTimestamp(value: BigInt | null) {
+    if (!value) {
+      this.unset("createdTimestamp");
+    } else {
+      this.set("createdTimestamp", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get createdBlock(): BigInt | null {
+    let value = this.get("createdBlock");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set createdBlock(value: BigInt | null) {
+    if (!value) {
+      this.unset("createdBlock");
+    } else {
+      this.set("createdBlock", Value.fromBigInt(<BigInt>value));
+    }
+  }
+}
+
+export class HistoryEvent extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save HistoryEvent entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type HistoryEvent must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("HistoryEvent", id.toString(), this);
+    }
+  }
+
+  static load(id: string): HistoryEvent | null {
+    return changetype<HistoryEvent | null>(store.get("HistoryEvent", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get txHash(): Bytes | null {
+    let value = this.get("txHash");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set txHash(value: Bytes | null) {
+    if (!value) {
+      this.unset("txHash");
+    } else {
+      this.set("txHash", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get eventType(): string | null {
+    let value = this.get("eventType");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set eventType(value: string | null) {
+    if (!value) {
+      this.unset("eventType");
+    } else {
+      this.set("eventType", Value.fromString(<string>value));
+    }
+  }
+
+  get token(): string | null {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string | null) {
+    if (!value) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(<string>value));
+    }
+  }
+
+  get amount(): BigInt | null {
+    let value = this.get("amount");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set amount(value: BigInt | null) {
+    if (!value) {
+      this.unset("amount");
+    } else {
+      this.set("amount", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get usdAmount(): BigInt | null {
+    let value = this.get("usdAmount");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set usdAmount(value: BigInt | null) {
+    if (!value) {
+      this.unset("usdAmount");
+    } else {
+      this.set("usdAmount", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get price(): BigInt | null {
+    let value = this.get("price");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set price(value: BigInt | null) {
+    if (!value) {
+      this.unset("price");
+    } else {
+      this.set("price", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get to(): Bytes | null {
+    let value = this.get("to");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set to(value: Bytes | null) {
+    if (!value) {
+      this.unset("to");
+    } else {
+      this.set("to", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get pool(): string {
+    let value = this.get("pool");
+    return value!.toString();
+  }
+
+  set pool(value: string) {
+    this.set("pool", Value.fromString(value));
+  }
+
+  get payment(): string | null {
+    let value = this.get("payment");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set payment(value: string | null) {
+    if (!value) {
+      this.unset("payment");
+    } else {
+      this.set("payment", Value.fromString(<string>value));
+    }
   }
 
   get createdTimestamp(): BigInt | null {

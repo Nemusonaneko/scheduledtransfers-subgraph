@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "0x497C03b1CAC69c45eBB738732Ed56D5951b323c0"
       abi: ScheduledTransfersFactory
-      startBlock: 8222329
+      startBlock: 8222331
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -61,4 +61,6 @@ templates:
           handler: handleChangeOracle
         - event: SetMaxPrice(uint256)
           handler: handleSetMaxPrice
+        - event: WithdrawPayer(address,uint256)
+          handler: handleWithdrawPayer
       file: ./src/scheduled-transfers.ts

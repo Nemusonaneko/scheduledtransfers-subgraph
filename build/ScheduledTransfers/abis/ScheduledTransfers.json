@@ -304,6 +304,12 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
@@ -903,8 +909,13 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_token",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "_amount",
         "type": "uint256"
       }
     ],
